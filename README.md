@@ -13,6 +13,7 @@ This project implements Apache Airflow DAGs that run dbt models on Google BigQue
 - **Kubernetes** manifests for GKE deployment
 - Sample dbt models (staging and marts)
 - Multiple DAG examples (comprehensive and simple)
+- **Support for multiple dbt projects** (Sales, Marketing, Finance)
 
 ## Project Structure
 
@@ -38,6 +39,13 @@ This project implements Apache Airflow DAGs that run dbt models on Google BigQue
 ├── requirements-dev.txt            # Development dependencies
 └── README.md                       # This file
 ```
+
+## Documentation
+
+- 📘 **[Setup Guide](docs/SETUP-GUIDE.th.md)** - Step-by-step installation and usage instructions (Thai)
+- 🔀 **[Multiple dbt Projects Guide](docs/MULTI-PROJECT-GUIDE.md)** - How to run multiple dbt projects concurrently
+- ❓ **[FAQ](docs/FAQ.th.md)** - Frequently Asked Questions (Thai)
+- 🇹🇭 **[Thai Documentation](README.th.md)** - Full documentation in Thai
 
 ## Prerequisites
 

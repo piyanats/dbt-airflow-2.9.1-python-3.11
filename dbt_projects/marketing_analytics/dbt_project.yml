@@ -1,0 +1,29 @@
+name: 'marketing_analytics'
+version: '1.0.0'
+config-version: 2
+
+profile: 'marketing_analytics'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  marketing_analytics:
+    staging:
+      +materialized: view
+      +schema: marketing_staging
+    marts:
+      +materialized: table
+      +schema: marketing_marts
+
+vars:
+  start_date: '2024-01-01'

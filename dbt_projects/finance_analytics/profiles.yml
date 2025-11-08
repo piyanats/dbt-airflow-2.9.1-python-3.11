@@ -1,0 +1,14 @@
+finance_analytics:
+  target: prod
+  outputs:
+    prod:
+      type: bigquery
+      method: service-account
+      project: "{{ env_var('GCP_PROJECT_ID', 'your-gcp-project-id') }}"
+      dataset: "{{ env_var('FINANCE_DATASET', 'finance_analytics') }}"
+      threads: 4
+      timeout_seconds: 300
+      location: "{{ env_var('GCP_LOCATION', 'US') }}"
+      priority: interactive
+      retries: 1
+      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS', '') }}"

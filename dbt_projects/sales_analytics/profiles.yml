@@ -1,0 +1,25 @@
+sales_analytics:
+  target: prod
+  outputs:
+    prod:
+      type: bigquery
+      method: service-account
+      project: "{{ env_var('GCP_PROJECT_ID', 'your-gcp-project-id') }}"
+      dataset: "{{ env_var('SALES_DATASET', 'sales_analytics') }}"
+      threads: 4
+      timeout_seconds: 300
+      location: "{{ env_var('GCP_LOCATION', 'US') }}"
+      priority: interactive
+      retries: 1
+      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS', '') }}"
+    dev:
+      type: bigquery
+      method: service-account
+      project: "{{ env_var('GCP_PROJECT_ID', 'your-gcp-project-id') }}"
+      dataset: "{{ env_var('SALES_DATASET', 'sales_analytics_dev') }}"
+      threads: 2
+      timeout_seconds: 300
+      location: "{{ env_var('GCP_LOCATION', 'US') }}"
+      priority: interactive
+      retries: 1
+      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS', '') }}"

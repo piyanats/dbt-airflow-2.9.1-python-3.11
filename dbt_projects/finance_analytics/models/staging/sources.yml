@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: finance_raw
+    description: "Raw finance data"
+    database: "{{ env_var('GCP_PROJECT_ID', 'your-gcp-project-id') }}"
+    schema: finance_raw
+    tables:
+      - name: invoices
+        description: "Invoice records"
+      - name: payments
+        description: "Payment transactions"
+      - name: expenses
+        description: "Expense records"

@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: marketing_raw
+    description: "Raw marketing data"
+    database: "{{ env_var('GCP_PROJECT_ID', 'your-gcp-project-id') }}"
+    schema: marketing_raw
+    tables:
+      - name: campaigns
+        description: "Marketing campaigns"
+      - name: leads
+        description: "Lead information"
+      - name: conversions
+        description: "Conversion events"

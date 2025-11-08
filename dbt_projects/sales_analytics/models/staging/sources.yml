@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: sales_raw
+    description: "Raw sales data"
+    database: "{{ env_var('GCP_PROJECT_ID', 'your-gcp-project-id') }}"
+    schema: sales_raw
+    tables:
+      - name: transactions
+        description: "Sales transactions"
+      - name: products
+        description: "Product catalog"
+      - name: stores
+        description: "Store information"

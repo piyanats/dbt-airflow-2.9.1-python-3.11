@@ -13,10 +13,12 @@
 - **Kubernetes manifests** สำหรับการ deploy บน GKE
 - ตัวอย่าง dbt models (staging และ marts)
 - ตัวอย่าง DAGs หลายแบบ (แบบละเอียดและแบบง่าย)
+- **รองรับการรันหลาย dbt projects** (Sales, Marketing, Finance)
 
 ## เอกสารประกอบ
 
 - 📘 **[คู่มือการติดตั้งและใช้งาน](docs/SETUP-GUIDE.th.md)** - คำแนะนำทีละขั้นตอนสำหรับการติดตั้งและใช้งาน
+- 🔀 **[คู่มือการจัดการหลาย dbt Projects](docs/MULTI-PROJECT-GUIDE.th.md)** - วิธีการรัน dbt หลาย projects พร้อมกัน
 - ❓ **[คำถามที่พบบ่อย (FAQ)](docs/FAQ.th.md)** - คำตอบสำหรับคำถามที่พบบ่อย
 - 📖 **[เอกสารภาษาอังกฤษ](README.md)** - English documentation
 
