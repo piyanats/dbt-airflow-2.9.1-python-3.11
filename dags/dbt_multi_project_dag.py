@@ -69,7 +69,7 @@ def setup_gcp_credentials(**context):
 
     # Set environment variables for dbt
     os.environ["GCP_PROJECT_ID"] = project_id
-    os.environ["GCP_LOCATION"] = "US"
+    os.environ["GCP_LOCATION"] = "asia-southeast1"
 
     # Set dataset environment variables for each project
     for project_name, config in DBT_PROJECTS.items():
@@ -130,7 +130,7 @@ with DAG(
                 env={
                     "GCP_PROJECT_ID": "{{ var.value.gcp_project_id }}",
                     dataset_env_var: f"{{{{ var.value.get('{dataset_env_var.lower()}', '{dataset_default}') }}}}",
-                    "GCP_LOCATION": "{{ var.value.gcp_location | default('US', true) }}",
+                    "GCP_LOCATION": "{{ var.value.gcp_location | default('asia-southeast1', true) }}",
                 },
             )
 
@@ -141,7 +141,7 @@ with DAG(
                 env={
                     "GCP_PROJECT_ID": "{{ var.value.gcp_project_id }}",
                     dataset_env_var: f"{{{{ var.value.get('{dataset_env_var.lower()}', '{dataset_default}') }}}}",
-                    "GCP_LOCATION": "{{ var.value.gcp_location | default('US', true) }}",
+                    "GCP_LOCATION": "{{ var.value.gcp_location | default('asia-southeast1', true) }}",
                 },
             )
 

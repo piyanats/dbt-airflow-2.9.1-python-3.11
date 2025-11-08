@@ -8,7 +8,7 @@ sales_analytics:
       dataset: "{{ env_var('SALES_DATASET', 'sales_analytics') }}"
       threads: 4
       timeout_seconds: 300
-      location: "{{ env_var('GCP_LOCATION', 'US') }}"
+      location: "{{ env_var('GCP_LOCATION', 'asia-southeast1') }}"
       priority: interactive
       retries: 1
       # Use project-specific service account key file
@@ -22,7 +22,7 @@ sales_analytics:
       dataset: "{{ env_var('SALES_DATASET', 'sales_analytics_dev') }}"
       threads: 2
       timeout_seconds: 300
-      location: "{{ env_var('GCP_LOCATION', 'US') }}"
+      location: "{{ env_var('GCP_LOCATION', 'asia-southeast1') }}"
       priority: interactive
       retries: 1
       keyfile: "{{ env_var('SALES_SERVICE_ACCOUNT_KEY', env_var('GOOGLE_APPLICATION_CREDENTIALS', '')) }}"

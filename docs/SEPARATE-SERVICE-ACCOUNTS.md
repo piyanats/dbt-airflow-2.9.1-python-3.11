@@ -165,7 +165,7 @@ Update `.env` file:
 ```bash
 # GCP Configuration
 GCP_PROJECT_ID=your-actual-project-id
-GCP_LOCATION=US
+GCP_LOCATION=asia-southeast1
 
 # Service Account Keys for Each Project
 SALES_SERVICE_ACCOUNT_KEY=/opt/airflow/config/sales-sa-key.json

@@ -134,7 +134,7 @@ _AIRFLOW_WWW_USER_PASSWORD=airflow  # เปลี่ยนเป็นรหั
 
 # GCP Configuration
 GCP_PROJECT_ID=your-actual-project-id  # แทนที่ด้วย Project ID จริง
-GCP_LOCATION=US  # หรือ asia-southeast1 สำหรับภูมิภาคเอเชีย
+GCP_LOCATION=asia-southeast1  # หรือ asia-southeast1 สำหรับภูมิภาคเอเชีย
 GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/config/gcp-key.json
 
 # dbt Configuration
@@ -168,19 +168,19 @@ ls -la config/gcp-key.json
 -- สร้าง dataset สำหรับข้อมูลต้นทาง
 CREATE SCHEMA IF NOT EXISTS `your-project-id.raw_data`
 OPTIONS(
-  location="US"  -- หรือ "asia-southeast1"
+  location="asia-southeast1"  -- หรือ "asia-southeast1"
 );
 
 -- สร้าง dataset สำหรับข้อมูล staging
 CREATE SCHEMA IF NOT EXISTS `your-project-id.analytics_staging`
 OPTIONS(
-  location="US"
+  location="asia-southeast1"
 );
 
 -- สร้าง dataset สำหรับข้อมูล marts
 CREATE SCHEMA IF NOT EXISTS `your-project-id.analytics_marts`
 OPTIONS(
-  location="US"
+  location="asia-southeast1"
 );
 
 -- ตัวอย่าง: สร้างตาราง orders (ปรับให้เหมาะกับข้อมูลจริงของคุณ)
@@ -300,7 +300,7 @@ docker-compose logs -f
 docker-compose exec airflow-webserver bash -c "
   export GCP_PROJECT_ID=your-project-id
   export DBT_DATASET=analytics
-  export GCP_LOCATION=US
+  export GCP_LOCATION=asia-southeast1
   export GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/config/gcp-key.json
   /opt/airflow/config/setup-airflow-config.sh
 "
@@ -318,7 +318,7 @@ cd /opt/airflow/dbt_project
 # ตั้งค่า environment variables
 export GCP_PROJECT_ID=your-project-id
 export DBT_DATASET=analytics
-export GCP_LOCATION=US
+export GCP_LOCATION=asia-southeast1
 export GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/config/gcp-key.json
 
 # ทดสอบการเชื่อมต่อ
@@ -490,7 +490,7 @@ kubectl exec -it -n airflow deployment/airflow-webserver -- bash
 # ตั้งค่า variables และ connections
 export GCP_PROJECT_ID=your-project-id
 export DBT_DATASET=analytics
-export GCP_LOCATION=US
+export GCP_LOCATION=asia-southeast1
 export USE_WORKLOAD_IDENTITY=true
 
 # รันสคริปต์ตั้งค่า

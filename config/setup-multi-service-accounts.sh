@@ -6,7 +6,7 @@ set -e
 
 # Configuration
 PROJECT_ID="${GCP_PROJECT_ID:-your-gcp-project-id}"
-LOCATION="${GCP_LOCATION:-US}"
+LOCATION="${GCP_LOCATION:-asia-southeast1}"
 
 echo "╔════════════════════════════════════════════════════════════════╗"
 echo "║   Creating Separate Service Accounts for dbt Projects         ║"

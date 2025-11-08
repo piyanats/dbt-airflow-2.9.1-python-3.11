@@ -135,7 +135,7 @@ client_c_analytics/      → Client C data
 ```bash
 # GCP Configuration
 GCP_PROJECT_ID=your-gcp-project-id
-GCP_LOCATION=US
+GCP_LOCATION=asia-southeast1
 GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/config/gcp-key.json
 
 # dbt Configuration (Multiple Projects)

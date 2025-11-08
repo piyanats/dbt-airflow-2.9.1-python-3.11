@@ -58,7 +58,7 @@ def setup_gcp_credentials(**context):
     # Set environment variables for dbt
     os.environ["GCP_PROJECT_ID"] = project_id
     os.environ["DBT_DATASET"] = "analytics"
-    os.environ["GCP_LOCATION"] = "US"
+    os.environ["GCP_LOCATION"] = "asia-southeast1"
 
     # If using service account key file
     if hasattr(credentials, 'service_account_email'):
@@ -106,7 +106,7 @@ with DAG(
         env={
             "GCP_PROJECT_ID": "{{ var.value.gcp_project_id }}",
             "DBT_DATASET": "{{ var.value.dbt_dataset | default('analytics', true) }}",
-            "GCP_LOCATION": "{{ var.value.gcp_location | default('US', true) }}",
+            "GCP_LOCATION": "{{ var.value.gcp_location | default('asia-southeast1', true) }}",
         },
         doc_md="""
         ## dbt Debug

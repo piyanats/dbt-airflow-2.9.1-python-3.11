@@ -356,7 +356,7 @@ models:
 -- ใน BigQuery Console
 CREATE SCHEMA `your-project-id.analytics`
 OPTIONS(
-  location="US",  -- หรือ "asia-southeast1"
+  location="asia-southeast1",  -- หรือ "asia-southeast1"
   description="Analytics dataset for dbt models"
 );
 ```
@@ -364,7 +364,7 @@ OPTIONS(
 หรือใช้ command line:
 ```bash
 bq mk --dataset \
-  --location=US \
+  --location=asia-southeast1 \
   --description="Analytics dataset" \
   your-project-id:analytics
 ```

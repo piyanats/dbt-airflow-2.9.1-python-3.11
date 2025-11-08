@@ -83,7 +83,7 @@ with DAG(
                 env={
                     "GCP_PROJECT_ID": "{{ var.value.gcp_project_id }}",
                     dataset_var: f"{{{{ var.value.get('{dataset_var.lower()}', '{dataset_default}') }}}}",
-                    "GCP_LOCATION": "{{ var.value.gcp_location | default('US', true) }}",
+                    "GCP_LOCATION": "{{ var.value.gcp_location | default('asia-southeast1', true) }}",
                 },
             )
 

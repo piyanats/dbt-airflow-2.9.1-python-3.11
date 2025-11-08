@@ -51,6 +51,6 @@ with DAG(
         env={
             "GCP_PROJECT_ID": "{{ var.value.gcp_project_id }}",
             "DBT_DATASET": "{{ var.value.dbt_dataset | default('analytics', true) }}",
-            "GCP_LOCATION": "{{ var.value.gcp_location | default('US', true) }}",
+            "GCP_LOCATION": "{{ var.value.gcp_location | default('asia-southeast1', true) }}",
         },
     )
