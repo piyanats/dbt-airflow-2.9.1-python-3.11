@@ -1,5 +1,7 @@
 # Airflow dbt BigQuery Pipeline
 
+**English** | [ภาษาไทย](README.th.md)
+
 This project implements Apache Airflow DAGs that run dbt models on Google BigQuery, designed to run on Google Kubernetes Engine (GKE) with Workload Identity.
 
 ## Features
