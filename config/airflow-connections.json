@@ -1,0 +1,33 @@
+{
+  "connections": [
+    {
+      "conn_id": "bigquery_default",
+      "conn_type": "google_cloud_platform",
+      "description": "BigQuery connection for dbt",
+      "extra": {
+        "project": "your-gcp-project-id",
+        "location": "US",
+        "num_retries": 5,
+        "use_legacy_sql": false,
+        "key_path": "/opt/airflow/config/gcp-key.json"
+      }
+    }
+  ],
+  "variables": [
+    {
+      "key": "gcp_project_id",
+      "value": "your-gcp-project-id",
+      "description": "GCP Project ID for BigQuery"
+    },
+    {
+      "key": "dbt_dataset",
+      "value": "analytics",
+      "description": "Default BigQuery dataset for dbt models"
+    },
+    {
+      "key": "gcp_location",
+      "value": "US",
+      "description": "GCP location for BigQuery"
+    }
+  ]
+}

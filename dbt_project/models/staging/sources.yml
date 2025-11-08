@@ -1,0 +1,31 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Raw data from source systems"
+    database: "{{ env_var('GCP_PROJECT_ID', 'your-gcp-project-id') }}"
+    schema: raw_data
+    tables:
+      - name: orders
+        description: "Raw orders table"
+        columns:
+          - name: order_id
+            description: "Unique identifier for orders"
+          - name: customer_id
+            description: "Reference to customer"
+          - name: order_date
+            description: "Date order was placed"
+          - name: order_amount
+            description: "Total order amount"
+          - name: order_status
+            description: "Status of the order"
+
+      - name: customers
+        description: "Raw customers table"
+        columns:
+          - name: customer_id
+            description: "Unique identifier for customers"
+          - name: customer_name
+            description: "Customer full name"
+          - name: customer_email
+            description: "Customer email address"

@@ -1,0 +1,33 @@
+dbt_airflow_project:
+  target: prod
+  outputs:
+    prod:
+      type: bigquery
+      method: service-account
+      # The keyfile path will be set dynamically by Airflow
+      # or use workload identity when running on GKE
+      project: "{{ env_var('GCP_PROJECT_ID', 'your-gcp-project-id') }}"
+      dataset: "{{ env_var('DBT_DATASET', 'analytics') }}"
+      threads: 4
+      timeout_seconds: 300
+      location: "{{ env_var('GCP_LOCATION', 'US') }}"
+      priority: interactive
+      retries: 1
+
+      # For workload identity on GKE, use impersonate_service_account
+      # impersonate_service_account: "{{ env_var('DBT_SERVICE_ACCOUNT', '') }}"
+
+      # For service account key file authentication
+      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS', '') }}"
+
+    dev:
+      type: bigquery
+      method: service-account
+      project: "{{ env_var('GCP_PROJECT_ID', 'your-gcp-project-id') }}"
+      dataset: "{{ env_var('DBT_DATASET', 'analytics_dev') }}"
+      threads: 2
+      timeout_seconds: 300
+      location: "{{ env_var('GCP_LOCATION', 'US') }}"
+      priority: interactive
+      retries: 1
+      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS', '') }}"

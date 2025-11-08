@@ -1,0 +1,21 @@
+# Airflow 2.9.1 for Python 3.11
+apache-airflow==2.9.1
+apache-airflow-providers-google==10.17.0
+
+# dbt with BigQuery adapter
+dbt-core==1.7.7
+dbt-bigquery==1.7.4
+
+# Additional dependencies for GKE and workload identity
+google-cloud-bigquery==3.17.2
+google-auth==2.27.0
+google-auth-httplib2==0.2.0
+google-cloud-storage==2.14.0
+
+# Kubernetes provider for Airflow on GKE
+apache-airflow-providers-cncf-kubernetes==8.0.1
+
+# Utility packages
+pendulum==2.1.2
+sqlparse==0.4.4
+pyyaml==6.0.1
