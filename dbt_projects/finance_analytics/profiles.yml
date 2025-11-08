@@ -11,4 +11,7 @@ finance_analytics:
       location: "{{ env_var('GCP_LOCATION', 'US') }}"
       priority: interactive
       retries: 1
-      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS', '') }}"
+      # Use project-specific service account key file
+      keyfile: "{{ env_var('FINANCE_SERVICE_ACCOUNT_KEY', env_var('GOOGLE_APPLICATION_CREDENTIALS', '')) }}"
+      # Or use service account email for Workload Identity
+      # impersonate_service_account: "{{ env_var('FINANCE_SERVICE_ACCOUNT_EMAIL', '') }}"
