@@ -131,7 +131,7 @@ Run the automated script:
 ```bash
 # Set environment variables
 export GCP_PROJECT_ID="your-project-id"
-export GCP_LOCATION="US"
+export GCP_LOCATION="asia-southeast1"
 
 # Run the setup script
 ./config/setup-multi-service-accounts.sh

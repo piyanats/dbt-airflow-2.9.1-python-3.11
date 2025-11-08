@@ -244,7 +244,7 @@ DAG แบบง่ายที่รันคำสั่ง dbt ทั้ง�
 ตั้งค่าใน Airflow UI (Admin → Variables):
 - `gcp_project_id`: GCP project ID ของคุณ
 - `dbt_dataset`: BigQuery dataset ปลายทาง (ค่าเริ่มต้น: `analytics`)
-- `gcp_location`: ตำแหน่ง BigQuery (ค่าเริ่มต้น: `US`)
+- `gcp_location`: ตำแหน่ง BigQuery (ค่าเริ่มต้น: `asia-southeast1`)
 
 ### Airflow Connections
 

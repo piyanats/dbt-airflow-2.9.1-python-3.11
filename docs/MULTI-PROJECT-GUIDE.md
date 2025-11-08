@@ -174,7 +174,7 @@ In Airflow UI (Admin → Variables):
 | Key | Value | Description |
 |-----|-------|-------------|
 | gcp_project_id | your-project-id | GCP Project ID |
-| gcp_location | US | BigQuery location |
+| gcp_location | asia-southeast1 | BigQuery location |
 | sales_dataset | sales_analytics | Sales dataset |
 | marketing_dataset | marketing_analytics | Marketing dataset |
 | finance_dataset | finance_analytics | Finance dataset |

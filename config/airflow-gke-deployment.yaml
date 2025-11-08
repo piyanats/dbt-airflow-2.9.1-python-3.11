@@ -28,7 +28,7 @@ metadata:
   namespace: airflow
 data:
   GCP_PROJECT_ID: "your-gcp-project-id"
-  GCP_LOCATION: "US"
+  GCP_LOCATION: "asia-southeast1"
   DBT_DATASET: "analytics"
   AIRFLOW__CORE__EXECUTOR: "KubernetesExecutor"
   AIRFLOW__CORE__LOAD_EXAMPLES: "False"

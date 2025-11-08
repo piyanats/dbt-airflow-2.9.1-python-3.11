@@ -131,7 +131,7 @@ Finance:   Read ALL, Write finance_staging + finance_marts
 ```bash
 # Set environment variables
 export GCP_PROJECT_ID="your-project-id"
-export GCP_LOCATION="US"
+export GCP_LOCATION="asia-southeast1"
 
 # Run the setup script
 ./config/setup-multi-service-accounts.sh

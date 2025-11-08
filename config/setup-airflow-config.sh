@@ -9,7 +9,7 @@ echo "Setting up Airflow connections and variables..."
 echo "Setting Airflow variables..."
 airflow variables set gcp_project_id "${GCP_PROJECT_ID:-your-gcp-project-id}"
 airflow variables set dbt_dataset "${DBT_DATASET:-analytics}"
-airflow variables set gcp_location "${GCP_LOCATION:-US}"
+airflow variables set gcp_location "${GCP_LOCATION:-asia-southeast1}"
 
 # Create BigQuery connection
 echo "Creating BigQuery connection..."
@@ -20,7 +20,7 @@ if [ -n "$USE_WORKLOAD_IDENTITY" ]; then
         --conn-type 'google_cloud_platform' \
         --conn-extra "{
             \"project\": \"${GCP_PROJECT_ID}\",
-            \"location\": \"${GCP_LOCATION:-US}\",
+            \"location\": \"${GCP_LOCATION:-asia-southeast1}\",
             \"num_retries\": 5,
             \"use_legacy_sql\": false
         }"
@@ -30,7 +30,7 @@ else
         --conn-type 'google_cloud_platform' \
         --conn-extra "{
             \"project\": \"${GCP_PROJECT_ID}\",
-            \"location\": \"${GCP_LOCATION:-US}\",
+            \"location\": \"${GCP_LOCATION:-asia-southeast1}\",
             \"num_retries\": 5,
             \"use_legacy_sql\": false,
             \"key_path\": \"${GOOGLE_APPLICATION_CREDENTIALS:-/opt/airflow/config/gcp-key.json}\"

@@ -244,7 +244,7 @@ Located in `dbt_project/models/marts/`:
 Set these in Airflow UI (Admin → Variables):
 - `gcp_project_id`: Your GCP project ID
 - `dbt_dataset`: Target BigQuery dataset (default: `analytics`)
-- `gcp_location`: BigQuery location (default: `US`)
+- `gcp_location`: BigQuery location (default: `asia-southeast1`)
 
 ### Airflow Connections
 

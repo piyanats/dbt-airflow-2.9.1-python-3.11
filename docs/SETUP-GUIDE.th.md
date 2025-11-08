@@ -279,7 +279,7 @@ docker-compose logs -f
 |-----|-------|-------------|
 | gcp_project_id | your-project-id | GCP Project ID |
 | dbt_dataset | analytics | BigQuery dataset สำหรับ dbt |
-| gcp_location | US | BigQuery location |
+| gcp_location | asia-southeast1 | BigQuery location |
 
 **ตั้งค่า Connection:**
 1. ไปที่ **Admin** → **Connections**
