@@ -8,12 +8,14 @@ This project implements Apache Airflow DAGs that run dbt models on Google BigQue
 
 - **Airflow 2.9.1** with Python 3.11
 - **dbt-core** with BigQuery adapter
+- **Airbyte integration** for modern ELT pipelines
 - **GKE Workload Identity** support for secure authentication
 - **Docker** support for local development
 - **Kubernetes** manifests for GKE deployment
 - Sample dbt models (staging and marts)
 - Multiple DAG examples (comprehensive and simple)
 - **Support for multiple dbt projects** (Sales, Marketing, Finance)
+- **Separate service accounts** per dbt project for enhanced security
 
 ## Project Structure
 
@@ -21,18 +23,31 @@ This project implements Apache Airflow DAGs that run dbt models on Google BigQue
 .
 ├── dags/                           # Airflow DAGs
 │   ├── dbt_dag.py                 # Main dbt pipeline DAG
-│   └── dbt_simple_dag.py          # Simplified dbt DAG
-├── dbt_project/                    # dbt project
+│   ├── dbt_simple_dag.py          # Simplified dbt DAG
+│   ├── dbt_multi_project_dag.py   # Multi-project parallel DAG
+│   ├── dbt_multi_project_sequential_dag.py  # Multi-project sequential DAG
+│   └── airbyte_dbt_dag.py         # Airbyte + dbt ELT pipeline
+├── dbt_project/                    # Single dbt project example
 │   ├── models/                    # dbt models
 │   │   ├── staging/               # Staging models
 │   │   └── marts/                 # Marts models
 │   ├── dbt_project.yml            # dbt project configuration
 │   └── profiles.yml               # dbt profiles configuration
+├── dbt_projects/                   # Multiple dbt projects
+│   ├── sales_analytics/           # Sales analytics project
+│   ├── marketing_analytics/       # Marketing analytics project
+│   └── finance_analytics/         # Finance analytics project
 ├── config/                         # Configuration files
 │   ├── airflow-gke-deployment.yaml # Kubernetes deployment
 │   ├── setup-workload-identity.sh  # Workload identity setup script
+│   ├── setup-multi-service-accounts.sh  # Multi-SA setup script
+│   ├── setup-multi-workload-identity.sh # Multi-SA GKE setup
 │   ├── setup-airflow-config.sh     # Airflow config setup script
-│   └── airflow-connections.json    # Airflow connections config
+│   ├── airflow-connections.json    # Airflow connections config
+│   └── airbyte-connections/        # Airbyte connection examples
+│       ├── postgres-to-bigquery-example.json
+│       ├── mysql-to-bigquery-example.json
+│       └── google-ads-to-bigquery-example.json
 ├── Dockerfile                      # Docker image definition
 ├── docker-compose.yml              # Local development setup
 ├── requirements.txt                # Python dependencies
@@ -44,6 +59,8 @@ This project implements Apache Airflow DAGs that run dbt models on Google BigQue
 
 - 📘 **[Setup Guide](docs/SETUP-GUIDE.th.md)** - Step-by-step installation and usage instructions (Thai)
 - 🔀 **[Multiple dbt Projects Guide](docs/MULTI-PROJECT-GUIDE.md)** - How to run multiple dbt projects concurrently
+- 🔐 **[Separate Service Accounts Guide](docs/SEPARATE-SERVICE-ACCOUNTS.md)** - Using different service accounts per dbt project
+- 🔄 **[Airbyte Integration Guide](docs/AIRBYTE-INTEGRATION.md)** - Modern ELT pipeline with Airbyte + dbt
 - ❓ **[FAQ](docs/FAQ.th.md)** - Frequently Asked Questions (Thai)
 - 🇹🇭 **[Thai Documentation](README.th.md)** - Full documentation in Thai
 
@@ -216,6 +233,35 @@ A simplified DAG that runs all dbt commands in a single task. Useful for:
 - Smaller projects
 - Simple data pipelines
 - Getting started quickly
+
+### Airbyte + dbt ELT DAG (`airbyte_dbt_dag.py`)
+
+A modern ELT pipeline that combines Airbyte for data extraction/loading and dbt for transformation:
+
+**Workflow:**
+1. **Airbyte Syncs**: Extract and load data from multiple sources to BigQuery
+   - Sales data (PostgreSQL → BigQuery)
+   - Marketing data (Google Ads → BigQuery)
+2. **Wait for Completion**: Ensure all Airbyte syncs complete successfully
+3. **dbt Transformation**: Transform raw data into analytics-ready models
+   - dbt deps → run staging → test staging → run marts → test marts → docs
+
+**Benefits:**
+- ✅ Automated data integration from 300+ sources
+- ✅ Separation of concerns (EL vs T)
+- ✅ Scalable and production-ready
+- ✅ Easy monitoring through Airflow UI
+
+**Setup:**
+1. Install and configure Airbyte (see [Airbyte Integration Guide](docs/AIRBYTE-INTEGRATION.md))
+2. Create source → destination connections in Airbyte UI
+3. Save connection IDs and update them in `airbyte_dbt_dag.py`
+4. Configure Airflow connection to Airbyte server
+5. Enable and run the DAG
+
+### Multi-Project DAGs
+
+See [Multiple dbt Projects Guide](docs/MULTI-PROJECT-GUIDE.md) for details on running multiple dbt projects (sales, marketing, finance) in parallel or sequentially.
 
 ## dbt Models
 

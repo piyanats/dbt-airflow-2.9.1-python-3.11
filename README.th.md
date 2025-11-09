@@ -8,17 +8,21 @@
 
 - **Airflow 2.9.1** พร้อม Python 3.11
 - **dbt-core** พร้อม BigQuery adapter
+- **การเชื่อมต่อ Airbyte** สำหรับ modern ELT pipeline
 - รองรับ **GKE Workload Identity** สำหรับการยืนยันตัวตนที่ปลอดภัย
 - รองรับ **Docker** สำหรับการพัฒนาในเครื่อง
 - **Kubernetes manifests** สำหรับการ deploy บน GKE
 - ตัวอย่าง dbt models (staging และ marts)
 - ตัวอย่าง DAGs หลายแบบ (แบบละเอียดและแบบง่าย)
 - **รองรับการรันหลาย dbt projects** (Sales, Marketing, Finance)
+- **Service accounts แยกกัน** สำหรับแต่ละ dbt project เพื่อความปลอดภัยที่ดีขึ้น
 
 ## เอกสารประกอบ
 
 - 📘 **[คู่มือการติดตั้งและใช้งาน](docs/SETUP-GUIDE.th.md)** - คำแนะนำทีละขั้นตอนสำหรับการติดตั้งและใช้งาน
 - 🔀 **[คู่มือการจัดการหลาย dbt Projects](docs/MULTI-PROJECT-GUIDE.th.md)** - วิธีการรัน dbt หลาย projects พร้อมกัน
+- 🔐 **[คู่มือการใช้ Service Accounts แยกกัน](docs/SEPARATE-SERVICE-ACCOUNTS.th.md)** - การใช้ service account ต่างกันสำหรับแต่ละ dbt project
+- 🔄 **[คู่มือการใช้ Airbyte](docs/AIRBYTE-INTEGRATION.th.md)** - Modern ELT pipeline ด้วย Airbyte + dbt
 - ❓ **[คำถามที่พบบ่อย (FAQ)](docs/FAQ.th.md)** - คำตอบสำหรับคำถามที่พบบ่อย
 - 📖 **[เอกสารภาษาอังกฤษ](README.md)** - English documentation
 
@@ -28,18 +32,31 @@
 .
 ├── dags/                           # Airflow DAGs
 │   ├── dbt_dag.py                 # DAG หลักสำหรับ dbt pipeline
-│   └── dbt_simple_dag.py          # DAG แบบง่าย
-├── dbt_project/                    # โปรเจค dbt
+│   ├── dbt_simple_dag.py          # DAG แบบง่าย
+│   ├── dbt_multi_project_dag.py   # Multi-project DAG (แบบ parallel)
+│   ├── dbt_multi_project_sequential_dag.py  # Multi-project DAG (แบบ sequential)
+│   └── airbyte_dbt_dag.py         # Airbyte + dbt ELT pipeline
+├── dbt_project/                    # ตัวอย่าง dbt project เดี่ยว
 │   ├── models/                    # dbt models
 │   │   ├── staging/               # Staging models
 │   │   └── marts/                 # Marts models
 │   ├── dbt_project.yml            # การตั้งค่าโปรเจค dbt
 │   └── profiles.yml               # การตั้งค่า profiles สำหรับ dbt
+├── dbt_projects/                   # หลาย dbt projects
+│   ├── sales_analytics/           # โปรเจค Sales analytics
+│   ├── marketing_analytics/       # โปรเจค Marketing analytics
+│   └── finance_analytics/         # โปรเจค Finance analytics
 ├── config/                         # ไฟล์ configuration
 │   ├── airflow-gke-deployment.yaml # Kubernetes deployment
 │   ├── setup-workload-identity.sh  # สคริปต์ตั้งค่า workload identity
+│   ├── setup-multi-service-accounts.sh  # สคริปต์ตั้งค่า multi-SA
+│   ├── setup-multi-workload-identity.sh # สคริปต์ตั้งค่า multi-SA GKE
 │   ├── setup-airflow-config.sh     # สคริปต์ตั้งค่า Airflow
-│   └── airflow-connections.json    # ตัวอย่างการตั้งค่า connection
+│   ├── airflow-connections.json    # ตัวอย่างการตั้งค่า connection
+│   └── airbyte-connections/        # ตัวอย่างการตั้งค่า Airbyte connections
+│       ├── postgres-to-bigquery-example.json
+│       ├── mysql-to-bigquery-example.json
+│       └── google-ads-to-bigquery-example.json
 ├── Dockerfile                      # Docker image definition
 ├── docker-compose.yml              # ตั้งค่าสำหรับการพัฒนาในเครื่อง
 ├── requirements.txt                # Python dependencies

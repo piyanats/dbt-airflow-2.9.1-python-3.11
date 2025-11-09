@@ -15,6 +15,9 @@ google-cloud-storage==2.14.0
 # Kubernetes provider for Airflow on GKE
 apache-airflow-providers-cncf-kubernetes==8.0.1
 
+# Airbyte provider for ELT pipelines
+apache-airflow-providers-airbyte==3.7.1
+
 # Utility packages
 pendulum==2.1.2
 sqlparse==0.4.4

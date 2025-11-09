@@ -50,6 +50,7 @@ dbt_project/.user.yml
 config/gcp-key.json
 config/*.json
 !config/airflow-connections.json
+!config/airbyte-connections/*.json
 
 # IDE
 .vscode/

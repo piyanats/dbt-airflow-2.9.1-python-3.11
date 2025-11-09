@@ -1,0 +1,121 @@
+{
+  "name": "Google Ads to BigQuery - Marketing Data",
+  "description": "Example configuration for syncing Google Ads campaign data to BigQuery",
+  "source": {
+    "sourceDefinitionId": "253487c0-2246-43ba-a21f-5116b20a2c50",
+    "name": "Google Ads - Marketing Campaigns",
+    "connectionConfiguration": {
+      "credentials": {
+        "developer_token": "your-developer-token",
+        "client_id": "your-client-id.apps.googleusercontent.com",
+        "client_secret": "your-client-secret",
+        "refresh_token": "your-refresh-token",
+        "access_token": "your-access-token"
+      },
+      "customer_id": "1234567890",
+      "start_date": "2024-01-01",
+      "end_date": "",
+      "custom_queries": [],
+      "conversion_window_days": 14
+    }
+  },
+  "destination": {
+    "destinationDefinitionId": "22f6c74f-5699-40ff-833c-4a879ea40133",
+    "name": "BigQuery - Analytics Warehouse",
+    "connectionConfiguration": {
+      "project_id": "your-gcp-project-id",
+      "dataset_location": "asia-southeast1",
+      "dataset_id": "marketing_raw",
+      "loading_method": {
+        "method": "Standard"
+      },
+      "credentials_json": "{\n  \"type\": \"service_account\",\n  \"project_id\": \"your-project-id\",\n  ...\n}",
+      "transformation_priority": "interactive",
+      "big_query_client_buffer_size_mb": 15
+    }
+  },
+  "connection": {
+    "name": "Google Ads Marketing Data Sync",
+    "prefix": "",
+    "namespaceDefinition": "customformat",
+    "namespaceFormat": "${SOURCE_NAMESPACE}",
+    "schedule": {
+      "scheduleType": "manual"
+    },
+    "status": "active",
+    "operations": [],
+    "syncCatalog": {
+      "streams": [
+        {
+          "stream": {
+            "name": "campaigns",
+            "namespace": "google_ads",
+            "jsonSchema": {},
+            "supportedSyncModes": ["full_refresh", "incremental"],
+            "sourceDefinedCursor": true,
+            "defaultCursorField": ["updated_at"],
+            "sourceDefinedPrimaryKey": [["campaign_id"]]
+          },
+          "config": {
+            "syncMode": "incremental",
+            "cursorField": ["updated_at"],
+            "destinationSyncMode": "append_dedup",
+            "primaryKey": [["campaign_id"]],
+            "aliasName": "campaigns",
+            "selected": true
+          }
+        },
+        {
+          "stream": {
+            "name": "ad_groups",
+            "namespace": "google_ads",
+            "jsonSchema": {},
+            "supportedSyncModes": ["full_refresh", "incremental"],
+            "sourceDefinedCursor": true,
+            "defaultCursorField": ["updated_at"],
+            "sourceDefinedPrimaryKey": [["ad_group_id"]]
+          },
+          "config": {
+            "syncMode": "incremental",
+            "cursorField": ["updated_at"],
+            "destinationSyncMode": "append_dedup",
+            "primaryKey": [["ad_group_id"]],
+            "aliasName": "ad_groups",
+            "selected": true
+          }
+        },
+        {
+          "stream": {
+            "name": "campaign_performance_report",
+            "namespace": "google_ads",
+            "jsonSchema": {},
+            "supportedSyncModes": ["incremental"],
+            "sourceDefinedCursor": true,
+            "defaultCursorField": ["date"],
+            "sourceDefinedPrimaryKey": [["campaign_id", "date"]]
+          },
+          "config": {
+            "syncMode": "incremental",
+            "cursorField": ["date"],
+            "destinationSyncMode": "append_dedup",
+            "primaryKey": [["campaign_id"], ["date"]],
+            "aliasName": "campaign_performance_report",
+            "selected": true
+          }
+        }
+      ]
+    }
+  },
+  "notes": {
+    "usage": "This is an example configuration. Replace placeholders with your actual values.",
+    "connection_id": "After creating this connection in Airbyte UI, save the connection ID",
+    "dag_configuration": "Use the connection ID in dags/airbyte_dbt_dag.py AIRBYTE_CONNECTIONS dict",
+    "oauth_setup": {
+      "step1": "Go to Google Cloud Console and create OAuth 2.0 credentials",
+      "step2": "Use Airbyte's OAuth flow to get refresh_token",
+      "step3": "Get developer_token from Google Ads Manager account"
+    },
+    "conversion_window": "Number of days to look back for conversion attribution",
+    "performance_reports": "Contains daily metrics like impressions, clicks, cost, conversions"
+  }
+}

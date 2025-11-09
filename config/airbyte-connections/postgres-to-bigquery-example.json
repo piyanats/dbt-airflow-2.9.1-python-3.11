@@ -1,0 +1,127 @@
+{
+  "name": "PostgreSQL to BigQuery - Sales Data",
+  "description": "Example configuration for syncing sales data from PostgreSQL to BigQuery",
+  "source": {
+    "sourceDefinitionId": "decd338e-5647-4c0b-adf4-da0e75f5a750",
+    "name": "PostgreSQL - Sales Database",
+    "connectionConfiguration": {
+      "host": "your-postgres-host.example.com",
+      "port": 5432,
+      "database": "sales_db",
+      "username": "readonly_user",
+      "password": "********",
+      "ssl": true,
+      "ssl_mode": {
+        "mode": "require"
+      },
+      "replication_method": {
+        "method": "CDC",
+        "plugin": "pgoutput",
+        "publication": "airbyte_publication",
+        "replication_slot": "airbyte_slot"
+      },
+      "schemas": ["public"],
+      "tunnel_method": {
+        "tunnel_method": "NO_TUNNEL"
+      }
+    }
+  },
+  "destination": {
+    "destinationDefinitionId": "22f6c74f-5699-40ff-833c-4a879ea40133",
+    "name": "BigQuery - Analytics Warehouse",
+    "connectionConfiguration": {
+      "project_id": "your-gcp-project-id",
+      "dataset_location": "asia-southeast1",
+      "dataset_id": "sales_raw",
+      "loading_method": {
+        "method": "Standard"
+      },
+      "credentials_json": "{\n  \"type\": \"service_account\",\n  \"project_id\": \"your-project-id\",\n  ...\n}",
+      "transformation_priority": "interactive",
+      "big_query_client_buffer_size_mb": 15
+    }
+  },
+  "connection": {
+    "name": "Sales Data Sync",
+    "prefix": "",
+    "namespaceDefinition": "customformat",
+    "namespaceFormat": "${SOURCE_NAMESPACE}",
+    "schedule": {
+      "scheduleType": "manual"
+    },
+    "status": "active",
+    "operations": [],
+    "syncCatalog": {
+      "streams": [
+        {
+          "stream": {
+            "name": "transactions",
+            "namespace": "public",
+            "jsonSchema": {},
+            "supportedSyncModes": ["full_refresh", "incremental"],
+            "sourceDefinedCursor": true,
+            "defaultCursorField": ["updated_at"],
+            "sourceDefinedPrimaryKey": [["transaction_id"]]
+          },
+          "config": {
+            "syncMode": "incremental",
+            "cursorField": ["updated_at"],
+            "destinationSyncMode": "append_dedup",
+            "primaryKey": [["transaction_id"]],
+            "aliasName": "transactions",
+            "selected": true
+          }
+        },
+        {
+          "stream": {
+            "name": "products",
+            "namespace": "public",
+            "jsonSchema": {},
+            "supportedSyncModes": ["full_refresh", "incremental"],
+            "sourceDefinedCursor": true,
+            "defaultCursorField": ["updated_at"],
+            "sourceDefinedPrimaryKey": [["product_id"]]
+          },
+          "config": {
+            "syncMode": "incremental",
+            "cursorField": ["updated_at"],
+            "destinationSyncMode": "append_dedup",
+            "primaryKey": [["product_id"]],
+            "aliasName": "products",
+            "selected": true
+          }
+        },
+        {
+          "stream": {
+            "name": "stores",
+            "namespace": "public",
+            "jsonSchema": {},
+            "supportedSyncModes": ["full_refresh"],
+            "sourceDefinedPrimaryKey": [["store_id"]]
+          },
+          "config": {
+            "syncMode": "full_refresh",
+            "destinationSyncMode": "overwrite",
+            "primaryKey": [["store_id"]],
+            "aliasName": "stores",
+            "selected": true
+          }
+        }
+      ]
+    }
+  },
+  "notes": {
+    "usage": "This is an example configuration. Replace placeholders with your actual values.",
+    "connection_id": "After creating this connection in Airbyte UI, save the connection ID",
+    "dag_configuration": "Use the connection ID in dags/airbyte_dbt_dag.py AIRBYTE_CONNECTIONS dict",
+    "sync_modes": {
+      "incremental": "Syncs only new/changed records (recommended for large tables)",
+      "full_refresh": "Syncs all records every time (use for small lookup tables)"
+    },
+    "destination_sync_modes": {
+      "append": "Adds new records without removing old ones",
+      "append_dedup": "Adds new records and removes duplicates based on primary key (recommended)",
+      "overwrite": "Replaces entire table with new data"
+    }
+  }
+}

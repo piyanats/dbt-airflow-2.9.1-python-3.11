@@ -1,0 +1,102 @@
+{
+  "name": "MySQL to BigQuery - Customer Data",
+  "description": "Example configuration for syncing customer data from MySQL to BigQuery",
+  "source": {
+    "sourceDefinitionId": "435bb9a5-7887-4809-aa58-28c27df0d7ad",
+    "name": "MySQL - Customer Database",
+    "connectionConfiguration": {
+      "host": "your-mysql-host.example.com",
+      "port": 3306,
+      "database": "customer_db",
+      "username": "readonly_user",
+      "password": "********",
+      "ssl": true,
+      "ssl_mode": {
+        "mode": "required"
+      },
+      "replication_method": {
+        "method": "STANDARD"
+      },
+      "tunnel_method": {
+        "tunnel_method": "NO_TUNNEL"
+      }
+    }
+  },
+  "destination": {
+    "destinationDefinitionId": "22f6c74f-5699-40ff-833c-4a879ea40133",
+    "name": "BigQuery - Analytics Warehouse",
+    "connectionConfiguration": {
+      "project_id": "your-gcp-project-id",
+      "dataset_location": "asia-southeast1",
+      "dataset_id": "customer_raw",
+      "loading_method": {
+        "method": "Standard"
+      },
+      "credentials_json": "{\n  \"type\": \"service_account\",\n  \"project_id\": \"your-project-id\",\n  ...\n}",
+      "transformation_priority": "interactive",
+      "big_query_client_buffer_size_mb": 15
+    }
+  },
+  "connection": {
+    "name": "Customer Data Sync",
+    "prefix": "",
+    "namespaceDefinition": "customformat",
+    "namespaceFormat": "${SOURCE_NAMESPACE}",
+    "schedule": {
+      "scheduleType": "manual"
+    },
+    "status": "active",
+    "operations": [],
+    "syncCatalog": {
+      "streams": [
+        {
+          "stream": {
+            "name": "customers",
+            "namespace": "public",
+            "jsonSchema": {},
+            "supportedSyncModes": ["full_refresh", "incremental"],
+            "sourceDefinedCursor": true,
+            "defaultCursorField": ["updated_at"],
+            "sourceDefinedPrimaryKey": [["customer_id"]]
+          },
+          "config": {
+            "syncMode": "incremental",
+            "cursorField": ["updated_at"],
+            "destinationSyncMode": "append_dedup",
+            "primaryKey": [["customer_id"]],
+            "aliasName": "customers",
+            "selected": true
+          }
+        },
+        {
+          "stream": {
+            "name": "customer_addresses",
+            "namespace": "public",
+            "jsonSchema": {},
+            "supportedSyncModes": ["full_refresh", "incremental"],
+            "sourceDefinedCursor": true,
+            "defaultCursorField": ["updated_at"],
+            "sourceDefinedPrimaryKey": [["address_id"]]
+          },
+          "config": {
+            "syncMode": "incremental",
+            "cursorField": ["updated_at"],
+            "destinationSyncMode": "append_dedup",
+            "primaryKey": [["address_id"]],
+            "aliasName": "customer_addresses",
+            "selected": true
+          }
+        }
+      ]
+    }
+  },
+  "notes": {
+    "usage": "This is an example configuration. Replace placeholders with your actual values.",
+    "connection_id": "After creating this connection in Airbyte UI, save the connection ID",
+    "dag_configuration": "Use the connection ID in dags/airbyte_dbt_dag.py AIRBYTE_CONNECTIONS dict",
+    "replication_methods": {
+      "STANDARD": "Uses SELECT queries with cursor (recommended for most cases)",
+      "CDC": "Change Data Capture - real-time replication (requires binlog)"
+    }
+  }
+}
